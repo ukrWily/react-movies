@@ -1,0 +1,10 @@
+
+The OMDb API <donotreply@omdbapi.com>
+
+Here is your key: 14d4ee2
+
+Please append it to all of your API requests,
+
+OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=14d4ee2
+
+Click the following URL to activate your key: http://www.omdbapi.com/apikey.aspx?VERIFYKEY=9d3163ce-dd88-4164-a8ed-8d7a51146e94
