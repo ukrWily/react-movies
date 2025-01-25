@@ -9,11 +9,19 @@ export function Movie(props) {
   return (
     <div id={id} className="card movie">
       <div className="card-image waves-effect waves-block waves-light">
-        <img className="activator" src={poster} alt={title} />
+        {poster === "N/A" ? (
+          <img
+            className="activator movie-img"
+            src={`https://placehold.co/600x600?text=${title}`}
+            alt={title}
+          />
+        ) : (
+          <img className="activator" src={poster} alt={title} />
+        )}
       </div>
       <div className="card-content">
         <span className="card-title activator">{title}</span>
-        <p>
+        <p className="movie-footer">
           {year} <span className="right">{type}</span>
         </p>
       </div>
