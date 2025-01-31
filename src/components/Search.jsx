@@ -1,89 +1,77 @@
-import { Component } from "react";
+import { useState } from "react";
 
-export class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.handleKey = this.handleKey.bind(this);
-    this.movieSearch = this.movieSearch.bind(this);
-  }
+export const Search = ({ searchMovies }) => {
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("all");
 
-  state = {
-    search: "",
-    type: "all",
-  };
-
-  movieSearch = () => {
-    if (this.state.search.trim() === "") {
+  const movieSearch = () => {
+    if (search.trim() === "") {
       return;
     }
-    this.props.search(this.state.search, this.state.type);
+    searchMovies(search, type);
     // this.setState({ search: "" });
   };
 
-  handleKey(e) {
+  const handleKey = (e) => {
     if (e.key === "Enter") {
-      this.movieSearch(this.state.search, this.state.type);
+      movieSearch(search, type);
     }
-  }
-
-  handleFilter = (e) => {
-    this.setState(
-      () => ({ type: e.target.value }),
-      () => this.props.search(this.state.search, this.state.type)
-    );
   };
 
-  render() {
-    return (
-      <div className="search-wrapper">
-        <div class="row search">
-          <div class="input-field col s6">
-            <input
-              placeholder="Search movie"
-              id="input_text"
-              type="search"
-              value={this.state.search}
-              onChange={(e) => this.setState({ search: e.target.value })}
-              onKeyDown={(e) => this.handleKey(e)}
-            />
-            {this.state.search.trim() !== "" && (
-              <button className="search-button" onClick={this.movieSearch}>
-                Search
-              </button>
-            )}
-          </div>
-        </div>
+  const handleFilter = (e) => {
+    setType(e.target.value);
+    searchMovies(search, e.target.value);
+  };
 
-        <form className="typeMovies" onChange={this.handleFilter}>
-          <label>
-            <input
-              name="type"
-              type="radio"
-              value="all"
-              checked={this.state.type === "all"}
-            />
-            <span>All</span>
-          </label>
-          <label>
-            <input
-              name="type"
-              type="radio"
-              value="movie"
-              checked={this.state.type === "movie"}
-            />
-            <span>Movie</span>
-          </label>
-          <label>
-            <input
-              name="type"
-              type="radio"
-              value="series"
-              checked={this.state.type === "series"}
-            />
-            <span>Series</span>
-          </label>
-        </form>
+  return (
+    <div className="search-wrapper">
+      <div class="row search">
+        <div class="input-field col s6">
+          <input
+            placeholder="Search movie"
+            id="input_text"
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => handleKey(e)}
+          />
+          {search.trim() !== "" && (
+            <button className="search-button" onClick={movieSearch}>
+              Search
+            </button>
+          )}
+        </div>
       </div>
-    );
-  }
-}
+
+      <form className="typeMovies" onChange={handleFilter}>
+        <label>
+          <input
+            name="type"
+            type="radio"
+            value="all"
+            checked={type === "all"}
+          />
+          <span>All</span>
+        </label>
+        <label>
+          <input
+            name="type"
+            type="radio"
+            value="movie"
+            checked={type === "movie"}
+          />
+          <span>Movie</span>
+        </label>
+        <label>
+          <input
+            name="type"
+            type="radio"
+            value="series"
+            checked={type === "series"}
+          />
+          <span>Series</span>
+        </label>
+      </form>
+    </div>
+  );
+};

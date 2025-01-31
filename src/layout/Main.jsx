@@ -11,6 +11,8 @@ export class Main extends React.Component {
   };
 
   handleSearch = (search = "avatar", type = "all") => {
+    console.log(API_KEY);
+
     this.setState({ loading: true });
     fetch(
       `https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}${
@@ -18,7 +20,11 @@ export class Main extends React.Component {
       }`
     )
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
+      .then((data) => this.setState({ movies: data.Search, loading: false }))
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
   };
 
   componentDidMount() {
@@ -30,7 +36,7 @@ export class Main extends React.Component {
 
     return (
       <main className="content">
-        <Search search={this.handleSearch} handleType={this.handleType} />
+        <Search searchMovies={this.handleSearch} handleType={this.handleType} />
         {!loading ? <Movies movies={movies} /> : <Preloader />}
       </main>
     );
